@@ -44,7 +44,7 @@ getSalario = (id, callback) => {
   });
 };
 
-const id = 2;
+const id = 3;
 
 /* 
 ? Estas vana s er formas de hace rla misma lavor cada vez con mejores códigos
@@ -65,10 +65,26 @@ const id = 2;
  *Forma 2
  */
 
-getEmpleado(id).then((empleado) => {
-  getSalario(id)
-    .then((salario) => {
-      console.log(`El empleado ${empleado} tiene salario de ${salario}`);
-    })
-    .catch((err) => console.error(err));
-});
+/* getEmpleado(id)
+  .then((empleado) => {
+    getSalario(id)
+      .then((salario) => {
+        console.log(`El empleado ${empleado} tiene salario de ${salario}`);
+      })
+      .catch((err) => console.error(err));
+  })
+  .catch((err) => console.error(err)); */
+
+/*
+ *Forma 3 promesas en cadena
+ */
+
+let nombre;
+
+getEmpleado(id)
+  .then((empleado) => {
+    nombre = empleado;
+    return getSalario(id);
+  })
+  .then((salario) => console.log(`${nombre} tiene salario de ${salario}`))
+  .catch(err => console.error(err));
