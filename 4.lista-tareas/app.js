@@ -11,9 +11,9 @@ const main = async () => {
 
   if (tareasDB) {
     //establecer las tareas
+    tareas.cargarTareasFromArray(tareasDB);
   }
 
-  await pausa();
   do {
     opt = await inquirerMenu();
     switch (opt) {
@@ -24,10 +24,18 @@ const main = async () => {
         break;
 
       case "2":
-        console.log(tareas.listadoArr);
+        tareas.listadoCompleto();
+        break;
+
+      case "3":
+        tareas.listarPendientesCompletadas(true);
+        break;
+
+      case "4":
+        tareas.listarPendientesCompletadas(false);
         break;
     }
-    //guardarDB(tareas.listadoArr);
+    guardarDB(tareas.listadoArr);
 
     await pausa();
   } while (opt !== "0");
