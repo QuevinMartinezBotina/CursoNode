@@ -1,5 +1,6 @@
 let inquirer = require("inquirer");
-require("colors");
+const Tarea = require("../models/Tarea");
+const color = require("colors");
 
 const preguntas = [
   {
@@ -82,8 +83,32 @@ const leerInput = async (message) => {
   return desc;
 };
 
+const listadoTareasBorrar = async (tareas = []) => {
+  const choices = tareas.map((tarea, i) => {
+    const idx = `${i}.`.green;
+
+    return {
+      value: tarea.id,
+      name: `${idx} ${tarea.desc}`,
+    };
+  });
+
+  const preguntas = [
+    {
+      type: "list",
+      name: "id",
+      message: "Borrar",
+      choices,
+    },
+  ];
+
+  const { id } = await inquirer.prompt(preguntas);
+  return id;
+};
+
 module.exports = {
   inquirerMenu,
   pausa,
   leerInput,
+  listadoTareasBorrar,
 };
