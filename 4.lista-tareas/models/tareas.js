@@ -19,7 +19,7 @@ class Tareas {
     this._listado = {};
   }
 
-  borrarTarea(id = ''){
+  borrarTarea(id = "") {
     if (this._listado[id]) {
       delete this._listado[id];
     }
@@ -57,12 +57,28 @@ class Tareas {
     let contador = 0;
 
     this.listadoArr.forEach((tarea) => {
-      const { desc, completadoEn } = tarea;//lo desestruturamos paar sacar lso datos, que salen de la tarea
-      const estado = completadoEn ? completadoEn.green : "Pendiente".red;//si completado tiene algo es porque se completo, de lo contrario sera NULL
+      const { desc, completadoEn } = tarea; //lo desestruturamos paar sacar lso datos, que salen de la tarea
+      const estado = completadoEn ? completadoEn.green : "Pendiente".red; //si completado tiene algo es porque se completo, de lo contrario sera NULL
 
-      if (!!completadoEn === completadas) {//si es diferente a true, sería un null, osea no completado
+      if (!!completadoEn === completadas) {
+        //si es diferente a true, sería un null, osea no completado
         ++contador;
         console.log(`${contador}. ${desc} :: ${estado}`);
+      }
+    });
+  }
+
+  toggleCompletadas(ids = []) {
+    ids.forEach((id) => {
+      const tarea = this._listado[id];
+      if (!tarea.completadoEn) {
+        tarea.completadoEn = new Date().toISOString();
+      }
+    });
+
+    this.listadoArr.forEach((tarea) => {
+      if (!ids.includes(tarea.id)) {
+        this._listado[tarea.id].completadoEn = null;
       }
     });
   }

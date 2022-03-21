@@ -132,25 +132,21 @@ const mostrarListadoCheckList = async (tareas = []) => {
     return {
       value: tarea.id,
       name: `${idx} ${tarea.desc}`,
+      checked: (tarea.completadoEn) ? true : false,
     };
   });
 
-  choices.unshift({
-    value:'0',
-    name:'0.'.green + ' Cancelar'
-  });
-
-  const preguntas = [
+  const pregunta = [
     {
-      type: "list",
-      name: "id",
-      message: "Borrar",
+      type: "checkbox",
+      name: "ids",
+      message: "Seleccione",
       choices,
     },
   ];
 
-  const { id } = await inquirer.prompt(preguntas);
-  return id;
+  const { ids } = await inquirer.prompt(pregunta);
+  return ids;
 };
 
 
@@ -161,4 +157,5 @@ module.exports = {
   leerInput,
   listadoTareasBorrar,
   confirmar,
+  mostrarListadoCheckList
 };
